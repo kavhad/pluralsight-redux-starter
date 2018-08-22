@@ -39,17 +39,6 @@ import CourseList from './CourseList';
       <div>
         <h1>Courses</h1>
         <CourseList courses={courses} />
-        {/* <h2>Add Course</h2>
-        <input
-          type="text"
-          onChange={this.onTitleChange}
-          value={this.state.course.title} />
-
-        <input
-          type="submit"
-          onClick={this.onClickSave}
-          value="Save" /> */}
-
       </div>
     );
   }
