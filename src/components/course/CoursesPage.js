@@ -1,35 +1,20 @@
 import React, {PropTypes} from 'react';
+import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseList from './CourseList';
 
- class CoursesPage extends React.Component {
+class CoursesPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    // this.state = {
-    //   course: { title: '' }
-    // };
-
-    // this.onTitleChange = this.onTitleChange.bind(this);
-    // this.onClickSave = this.onClickSave.bind(this);
-
+    this.redirectToAddCoursePage = this.redirectToAddCoursePage.bind(this);
   }
 
-  // onTitleChange(event) {
-  //   const course = this.state.course;
-  //   course.title = event.target.value;
-  //   this.setState({course: course});
-  // }
-
-  // onClickSave(event) {
-  //   this.props.actions.createCourse(this.state.course);
-  // }
-
-  // courseRow(course, index) {
-  //   return <div key={index}>{course.title}</div>;
-  // }
+  redirectToAddCoursePage() {
+    browserHistory.push('/course');
+  }
 
   render() {
 
@@ -38,6 +23,11 @@ import CourseList from './CourseList';
     return (
       <div>
         <h1>Courses</h1>
+        <input
+          type="submit"
+          value="Add Course"
+          className="btn btn-primary"
+          onClick={this.redirectToAddCoursePage} />
         <CourseList courses={courses} />
       </div>
     );
