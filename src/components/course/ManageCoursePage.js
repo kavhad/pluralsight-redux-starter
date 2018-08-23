@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
+import toastr from 'toastr';
 
 class ManageCoursePage extends React.Component {
   constructor(props, context) {
@@ -10,7 +11,8 @@ class ManageCoursePage extends React.Component {
 
     this.state = {
       course: Object.assign({}, this.props.course),
-      errors: {}
+      errors: {},
+      saving: false
     };
 
     this.updateCourseState = this.updateCourseState.bind(this);
@@ -34,8 +36,19 @@ class ManageCoursePage extends React.Component {
 
   saveCourse(event) {
     event.preventDefault();
+    this.setState({saving: true});
     this.props.actions.saveCourse(this.state.course)
-      .then(() => this.context.router.push('/courses'));
+      .then(() => this.redirect())
+      .catch(error => {
+        toastr.error(error);
+        this.setState({saving: false});
+      });
+  }
+
+  redirect() {
+    toastr.success('Course saved!');
+    this.setState({saving: false});
+    this.context.router.push('/courses');
   }
 
   render() {
@@ -45,7 +58,8 @@ class ManageCoursePage extends React.Component {
           course={this.state.course}
           errors={this.state.errors}
           onSave={this.saveCourse}
-          onChange={this.updateCourseState} />
+          onChange={this.updateCourseState}
+          saving={this.state.saving} />
     );
   }
 
@@ -55,7 +69,6 @@ ManageCoursePage.propTypes = {
   actions: PropTypes.object.isRequired,
   course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired
-  //myProp: PropTypes.string.isRequired
 };
 
 ManageCoursePage.contextTypes = {

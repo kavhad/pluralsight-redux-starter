@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import courseApi from '../api/mockCourseApi';
+import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
 
 
 export const loadCoursesSuccess = (courses) => ({
@@ -8,21 +9,28 @@ export const loadCoursesSuccess = (courses) => ({
 });
 
 export const loadCourses = () =>
-    (dispatch) =>
-      courseApi.getAllCourses().then(courses => {
-        dispatch(loadCoursesSuccess(courses));
-      }).catch(error => {
-        throw(error);
-      });
+  (dispatch) => {
+    dispatch(beginAjaxCall());
+    return courseApi.getAllCourses().then(courses => {
+      dispatch(loadCoursesSuccess(courses));
+    }).catch(error => {
+      dispatch(ajaxCallError());
+      throw(error);
+    });
+  };
+
 
 
 export const updateCourseSuccess = (course) => ({ type : types.UPDATE_COURSE_SUCCESS, course });
 export const createCourseSuccess = (course) => ({ type : types.CREATE_COURSE_SUCCESS, course });
 
 export const saveCourse = (course) =>
-      (dispatch, getState) =>
-        courseApi.saveCourse(course)
-        .then(savedCourse => course.id ? dispatch(updateCourseSuccess(savedCourse)) : dispatch(createCourseSuccess(savedCourse)))
-        .catch(error => {
-          throw(error);
-         });
+    (dispatch, getState) => {
+      dispatch(beginAjaxCall());
+      return courseApi.saveCourse(course)
+      .then(savedCourse => course.id ? dispatch(updateCourseSuccess(savedCourse)) : dispatch(createCourseSuccess(savedCourse)))
+      .catch(error => {
+        dispatch(ajaxCallError());
+        throw(error);
+      });
+    };
