@@ -29,6 +29,15 @@ class CoursesPage extends React.Component {
     });
   }
 
+  renderListOrEmptyMessage(courses) {
+    if(courses.length > 0) {
+      return (<CourseList courses={courses} onDelete={this.deleteCourse} />);
+    }
+    else {
+      return (<h2>There are not courses at the moment!</h2>);
+    }
+  }
+
   render() {
 
     const {courses} = this.props;
@@ -41,7 +50,7 @@ class CoursesPage extends React.Component {
           value="Add Course"
           className="btn btn-primary"
           onClick={this.redirectToAddCoursePage} />
-        <CourseList courses={courses} onDelete={this.deleteCourse} />
+        {this.renderListOrEmptyMessage(courses)}
       </div>
     );
   }
