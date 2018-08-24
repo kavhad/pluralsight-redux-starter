@@ -15,7 +15,7 @@ describe('Store', () => {
 
     store.dispatch(action);
 
-    const actual = store.getState().courses[0];
+    const actual = store.getState().courses.items[0];
     const expectedCourse = {
       title: "Clean Code"
     };

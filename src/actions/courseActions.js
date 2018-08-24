@@ -8,14 +8,17 @@ export const loadCoursesSuccess = (courses) => ({
   courses
 });
 
+export const finishLoadCourses = () => ({type: types.FINISH_LOAD_COURSES});
 
 export const loadCourses = () =>
   (dispatch) => {
     dispatch(beginAjaxCall());
     return courseApi.getAllCourses().then(courses => {
       dispatch(loadCoursesSuccess(courses));
+      dispatch(finishLoadCourses());
     }).catch(error => {
       dispatch(ajaxCallError());
+      dispatch(finishLoadCourses());
       throw(error);
     });
   };

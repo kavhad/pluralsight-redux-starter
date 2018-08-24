@@ -13,7 +13,8 @@ export class ManageCoursePage extends React.Component {
     this.state = {
       course: Object.assign({}, this.props.course),
       errors: {},
-      saving: false
+      saving: false,
+      dirty: false
     };
 
     this.updateCourseState = this.updateCourseState.bind(this);
@@ -32,7 +33,7 @@ export class ManageCoursePage extends React.Component {
     let course = this.state.course;
     course[field] = event.target.value;
 
-    return this.setState({course: course});
+    return this.setState({course: course, dirty: true});
   }
 
   courseFormIsValid() {
@@ -66,7 +67,7 @@ export class ManageCoursePage extends React.Component {
 
   redirect() {
     toastr.success('Course saved!');
-    this.setState({saving: false});
+    this.setState({saving: false, dirty: false});
     this.context.router.push('/courses');
   }
 
@@ -83,6 +84,14 @@ export class ManageCoursePage extends React.Component {
   }
 
 }
+
+ManageCoursePage.statics = {
+  willTransitionFrom: function(transition, component) {
+    if(component.state.dirty && confirm('You have unsaved changes are you sure you want to discard your changes?')) {
+      transition.abort();
+    }
+  }
+};
 
 ManageCoursePage.propTypes = {
   actions: PropTypes.object.isRequired,

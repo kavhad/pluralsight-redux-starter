@@ -29,18 +29,19 @@ class CoursesPage extends React.Component {
     });
   }
 
-  renderListOrEmptyMessage(courses) {
+  renderListOrEmptyMessage(courses, loaded) {
     if(courses.length > 0) {
       return (<CourseList courses={courses} onDelete={this.deleteCourse} />);
-    }
-    else {
+    } else if(!loaded) {
+      return (<h2>Loading...</h2>);
+    } else {
       return (<h2>There are not courses at the moment!</h2>);
     }
   }
 
   render() {
 
-    const {courses} = this.props;
+    const {courses, loaded} = this.props;
 
     return (
       <div>
@@ -50,7 +51,7 @@ class CoursesPage extends React.Component {
           value="Add Course"
           className="btn btn-primary"
           onClick={this.redirectToAddCoursePage} />
-        {this.renderListOrEmptyMessage(courses)}
+        {this.renderListOrEmptyMessage(courses, loaded)}
       </div>
     );
   }
@@ -58,10 +59,11 @@ class CoursesPage extends React.Component {
 
  CoursesPage.propTypes = {
   actions: PropTypes.object.isRequired,
-  courses: PropTypes.array.isRequired
+  courses: PropTypes.array.isRequired,
+  loaded : PropTypes.bool.isRequired
  };
 
- const mapStateToProps = (state, ownProps) => ({courses : state.courses});
+ const mapStateToProps = (state, ownProps) => ({courses : state.courses.items, loaded: state.courses.loaded});
 
  const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(courseActions, dispatch)
