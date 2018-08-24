@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-import configureStore from './store/configurestore';
+import configureStore from './store/configureStore';
 import { Router, browserHistory} from 'react-router';
 import routes from './routes';
 import {loadCourses} from './actions/courseActions';
