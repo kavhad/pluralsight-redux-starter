@@ -20,7 +20,7 @@ describe('Store', () => {
       title: "Clean Code"
     };
 
-    expect(actual.title).toBe(course.title);
+    expect(actual.title).toBe(expectedCourse.title);
 
   });
 });
