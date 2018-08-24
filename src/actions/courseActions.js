@@ -8,6 +8,7 @@ export const loadCoursesSuccess = (courses) => ({
   courses
 });
 
+
 export const loadCourses = () =>
   (dispatch) => {
     dispatch(beginAjaxCall());
@@ -34,3 +35,24 @@ export const saveCourse = (course) =>
         throw(error);
       });
     };
+
+export const deleteCourse = (course) =>
+  (dispatch, getState) => {
+
+    dispatch(beginAjaxCall());
+
+    return courseApi.deleteCourse(course.id)
+      .then(() => {
+        dispatch(deleteCourseSuccess(course));
+      })
+      .catch(error => {
+        dispatch(ajaxCallError());
+        throw(error);
+      });
+
+};
+
+export const deleteCourseSuccess = course => ({
+    type: types.DELETE_COURSE_SUCCESS,
+    course
+});
