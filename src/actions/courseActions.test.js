@@ -13,7 +13,7 @@ describe('Course Actions', () => {
       const expectedAction = {
         type: types.CREATE_COURSE_SUCCESS,
         course
-      }
+      };
 
       const action = courseActions.createCourseSuccess(course);
 
