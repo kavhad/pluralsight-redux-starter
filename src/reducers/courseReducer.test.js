@@ -7,7 +7,7 @@ describe('Course Reducer', () => {
     const initialState = [
       {title: 'A'},
       {title: 'B'}
-    ]
+    ];
 
     const newCourse = {title: 'C'};
 
@@ -27,7 +27,7 @@ describe('Course Reducer', () => {
       {title: 'A', id: 'A'},
       {title: 'B', id: 'B'},
       {title: 'C', id: 'C'}
-    ]
+    ];
 
     const updateCourse = {title: 'C2', id: 'C'};
 
