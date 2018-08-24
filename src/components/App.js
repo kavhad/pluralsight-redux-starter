@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 class App extends React.Component {
   render() {
       return (<div className="container-fluid">
-              <Header loading={this.props.loading} />
+              <Header loading={this.props.loading} coursesLoaded={this.props.coursesLoaded} numOfCourses={this.props.numOfCourses} />
               {this.props.children}
           </div>);
   }
@@ -13,12 +13,16 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.object.isRequired,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    coursesLoaded: PropTypes.bool.isRequired,
+    numOfCourses: PropTypes.number.isRequred
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    loading: state.ajaxCallsInProgress > 0
+    loading: state.ajaxCallsInProgress > 0,
+    coursesLoaded: state.courses.loaded,
+    numOfCourses: state.courses.items.length
   };
 }
 
